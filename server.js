@@ -5,16 +5,19 @@ const cors = require("cors");
 require("dotenv").config();
 
 //import the routes
-const userRoute = require("./routes/users");
-const authRoute = require("./routes/auth");
+const userRoutes = require("./routes/users");
+const authRoutes = require("./routes/auth");
 
 //middleware
-app.use(express.json);
+app.use(express.json());
 app.use(cors());
 
 //routes middlware
-app.use("/api/users", userRoute);
-app.use("/api/auth", authRoute);
+// app.use("/user", userRoute);
+app.use("/api/users", userRoutes);
+app.use("/api/auth", authRoutes);
+
+const port = process.env.PORT || 9000;
 
 mongoose
   .connect(process.env.MONGODB_URL, {
@@ -25,5 +28,14 @@ mongoose
     console.log("DataBase Connected Successfully !");
   });
 
-const port = process.env.PORT || 9000;
-app.listen(port, () => console.log(`server is running on port ${port}`));
+app.listen(port, () => {
+  console.log(`server is running on port ${port}`);
+});
+
+// const newUser = new User(req.body);
+// newUser
+//   .save()
+//   .then((newUser) => {
+//     res.json(newUser);
+//   })
+//   .catch((err) => res.json(err));
